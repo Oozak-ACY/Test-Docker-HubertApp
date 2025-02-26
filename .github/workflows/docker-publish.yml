@@ -51,6 +51,6 @@ jobs:
       - name: Generate artifact attestation
         uses: actions/attest-build-provenance@v2
         with:
-          subject-name: index.docker.io/fbansept/givetime
+          subject-name: index.docker.io/oozak/hubertapp
           subject-digest: ${{ steps.push.outputs.digest }}
           push-to-registry: true
