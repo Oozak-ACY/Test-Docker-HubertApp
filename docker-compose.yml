@@ -1,0 +1,55 @@
+services:
+  app:
+    build: ./API/
+    # deploy:
+    #   replicas: 3
+    networks:
+      - backend
+      - proxy
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    environment:
+      - DATABASE_URL=mysql://root:rootpassword@db:3306/keovilay_db
+
+  # reverse-proxy:
+  #   image: nginx:1.27
+  #   restart: always
+  #   ports:
+  #     - "80:80"
+  #   volumes:
+  #     - ./reverse-proxy.conf:/etc/nginx/templates/default.conf.template
+  #   networks:
+  #     - proxy
+  #   depends_on:
+  #     - app
+  #     - static
+
+  db:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: keovilay_db
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./db_init:/docker-entrypoint-initdb.d 
+    networks:
+      - backend
+
+  static:
+    build: ./web-app/
+    networks:
+      - proxy
+    depends_on:
+      - app
+    ports:
+      - "81:80"
+
+volumes:
+  db_data:
+
+networks:
+  backend:
+  proxy:
