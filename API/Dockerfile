@@ -1,6 +1,6 @@
 FROM oven/bun:latest
-COPY package.json .
+COPY ./API/package.json .
 RUN bun install
-COPY ./index.ts .
+COPY ./API/index.ts .
 EXPOSE 3000
 ENTRYPOINT bun run index.ts
