@@ -2,7 +2,7 @@ FROM node:18-alpine AS build
 WORKDIR ./web-app/app
 COPY ./web-app/package*.json ./
 RUN npm install
-COPY . .
+COPY ./web-app .
 RUN npm run build
 
 
