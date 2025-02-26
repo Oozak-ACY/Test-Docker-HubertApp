@@ -10,8 +10,6 @@ services:
       - "3000:3000"
     depends_on:
       - db
-    environment:
-      - DATABASE_URL=mysql://root:rootpassword@db:3306/keovilay_db
 
   # reverse-proxy:
   #   image: nginx:1.27
